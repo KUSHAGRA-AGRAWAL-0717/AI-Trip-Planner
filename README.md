@@ -45,9 +45,7 @@
 
 ### Project Documentation  
 
-- [Demo 1 Documentation](https://docs.google.com/document/d/19L6aMWtfrBhs8b1KxlzUgDt6_VR9y-CtPlmndlVveJM/edit?usp=sharing)  
-- [Demo 2 Documentation](https://drive.google.com/drive/folders/1FdCSEWLEiCJMx1wZnsEbrxyj8pMCxOQv?usp=drive_link)  
-- [Demo 3 Documentation](https://docs.google.com/document/d/1WftryvZLKDnwDYBZSdE5w6eT0XxTaJnezaBwjwcu9R0/edit?usp=sharing)  
+
 
 
 ### Additional Resources  
