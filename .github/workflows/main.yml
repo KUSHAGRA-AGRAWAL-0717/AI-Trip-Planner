@@ -1,0 +1,65 @@
+name: Firebase Deployment
+on:
+  push:
+    branches: [main, develop]
+
+env:
+  CI: false
+  REACT_APP_OPEN_AI_KEY : ${{ secrets.REACT_APP_OPEN_AI_KEY }}
+  REACT_APP_FIREBASE_APIKEY : ${{ secrets.REACT_APP_FIREBASE_APIKEY }}
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2.3.2
+
+      - name: Install Dependencies
+        run: |
+          cd ai-trip-creator
+          npm install
+
+      - name: Install Dependencies
+        run: |
+          npm install
+
+      - name: Build
+        env:
+          CI: false
+          REACT_APP_OPEN_AI_KEY: ${{ secrets.REACT_APP_OPEN_AI_KEY }}
+          REACT_APP_FIREBASE_APIKEY: ${{ secrets.REACT_APP_FIREBASE_APIKEY }}
+        run: |
+          cd ai-trip-creator
+          npm run build
+
+      - name: Archive Production Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: ai-trip-creator/build
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2.3.2
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: build
+
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
+        env:
+          CI: false
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          REACT_APP_OPEN_AI_KEY : ${{ secrets.REACT_APP_OPEN_AI_KEY }}
+          REACT_APP_FIREBASE_APIKEY : ${{ secrets.REACT_APP_FIREBASE_APIKEY }}
+          
